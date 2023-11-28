@@ -1,7 +1,6 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -39,4 +38,27 @@
 
 .read-the-docs {
   color: #888;
+} */
+
+
+body {
+  margin: auto;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: auto;
+  background: linear-gradient(315deg, rgb(20, 2, 68) 3%, rgb(83, 8, 115) 38%, rgb(110, 18, 64) 68%);
+  animation: gradient 20s ease infinite;
+  background-size: 200% 300%;
+  background-attachment: fixed;
+}
+
+@keyframes gradient {
+  0% {
+      background-position: 5% 10%;
+  }
+  50% {
+      background-position: 100% 100%;
+  }
+  100% {
+      background-position: 0% 0%;
+  }
 }
