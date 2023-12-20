@@ -11,6 +11,9 @@ const CardImage = ({ url, className, ...props }: CardImageProps) => {
 
 
     useEffect(() => {
+        if (!url) {
+            return
+        }
         fetch(url)
             .then(response => {
                 if (response.status >= 500 || response.headers.get("Server") == "GitHub.com") {

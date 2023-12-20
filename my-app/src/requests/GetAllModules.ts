@@ -7,7 +7,7 @@ export type Response = {
 }
 
 export async function getAllModules(filter?: string): Promise<Response> {
-    let url = '/api/modules'
+    let url = '/api/modules/'
     if (filter !== undefined) {
         url += `?name=${filter}`
     }
