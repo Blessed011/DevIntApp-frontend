@@ -1,39 +1,39 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import { Link } from 'react-router-dom';
-import Card from 'react-bootstrap/Card';
+import {Card, ButtonGroup} from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import CardImage from './CardImage';
+import { IModule } from '../models'
 
-export interface IModuleProps {
-    uuid: string
-    name: string
-    description: string
-    mass: string
-    length: string
-    diameter: string
-    image_url: string
+
+// const setPlaceholder = (event: any) => {
+//     event.target.src = '/placeholder3.jpg';
+// };
+
+interface CardProps extends IModule {
+    children: ReactNode;
 }
 
-export const SmallCCard: FC<IModuleProps> = ({ uuid, name, image_url }) => (
-
-    <Card className='w-100 mx-auto px-0 shadow text-center'>
+export const SmallCCard: FC<CardProps> = ({ children, uuid, name, image_url}) => (
+    <Card className='w-100 mx-auto px-0 shadow-lg text-center' key={uuid}>
         <div className="ratio ratio-16x9 overflow-hidden">
-            <CardImage url={`http://${image_url}`} className='rounded object-fit-cover'/>
-            {/* <Card.Img src={`http://${image_url}`} alt='картинка модуля' onError={setPlaceholder} className='rounded object-fit-cover' /> */}
+            <CardImage url={image_url} className='rounded object-fit-cover' />
         </div>
         <Card.Body className='flex-grow-1'>
             <Card.Title>{name}</Card.Title>
         </Card.Body>
-        <Link to={`/modules/${uuid}`} className="btn btn-primary">Подробнее</Link>
+        <ButtonGroup vertical>
+            <Link to={`/modules/${uuid}`} className="btn btn-outline-primary">Подробнее</Link>
+            <>{children}</>
+        </ButtonGroup>
     </Card>
 )
 
-export const BigCCard: FC<IModuleProps> = ({ name, description, mass, length, diameter, image_url }) => (
-    <Card className='shadow text-center text-md-start'>
+export const BigCCard: FC<IModule> = ({ name, description, mass, length, diameter, image_url }) => (
+    <Card className='shadow-lg text-center text-md-start'>
         <div className='row'>
             <div className='col-12 col-md-8 overflow-hidden'>
-                {/* <Card.Img src={`http://${image_url}`} onError={setPlaceholder}/> */}
-                <CardImage url={`http://${image_url}`}/>
+                <CardImage url={image_url} />
             </div>
             <Card.Body className='col-12 col-md-4 ps-md-0'>
                 <ListGroup variant="flush">

@@ -1,7 +1,7 @@
-import { IModuleProps } from '../components/ModuleCard';
+import { IModule } from '../models';
 
 export const draft_mission = null
-export let modules = new Map<string, IModuleProps>([
+export let modules = new Map<string, IModule>([
     ["0ed54c76-eb75-44a4-a854-8fc473ef46fd",
         {
             "uuid": "0ed54c76-eb75-44a4-a854-8fc473ef46fd",

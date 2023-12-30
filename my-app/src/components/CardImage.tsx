@@ -1,5 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import { useState, useEffect } from 'react';
+import { imagePlaceholder, axiosImage } from '../api'
 
 interface CardImageProps {
     url: string;
@@ -7,24 +8,23 @@ interface CardImageProps {
 }
 
 const CardImage = ({ url, className, ...props }: CardImageProps) => {
-    const [src, setSrc] = useState(`${import.meta.env.BASE_URL}placeholder2.jpeg`);
-
+    const [src, setSrc] = useState(imagePlaceholder);
 
     useEffect(() => {
         if (!url) {
             return
         }
-        fetch(url)
+        axiosImage.get(url, { responseType: 'blob' })
             .then(response => {
-                if (response.status >= 500 || response.headers.get("Server") == "GitHub.com") {
+                if (response.status >= 500 || response.headers.server === 'GitHub.com') {
                     throw new Error(`Can't load image from ${url}`);
                 }
-                return response.blob();
+                setSrc(URL.createObjectURL(response.data));
             })
-            .then(blob => setSrc(URL.createObjectURL(blob)))
             .catch(error => {
                 console.error(error.message);
             });
+
     }, []);
 
     const handleError = () => {

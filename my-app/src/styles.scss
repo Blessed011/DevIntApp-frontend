@@ -8,8 +8,8 @@
 $primary: $indigo-600;
 $theme-colors: map-merge($theme-colors, ("primary": $primary));
 
-$box-shadow: 0 0.5rem 1rem rgba(65, 51, 183, .25);
-$box-shadow-sm: 0 .250rem .5rem rgba($black, .25);
+$box-shadow-lg: 0 0.5rem 1rem rgba(65, 51, 183, .25);
+$box-shadow: 0 .250rem .5rem rgba($black, .25);
 
-// Import all of Bootstrap's CSS
 @import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/react-datepicker/dist/react-datepicker.css";
