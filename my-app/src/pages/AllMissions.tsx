@@ -61,9 +61,9 @@ const AllMissions = () => {
                             className="shadow-sm"
                         >
                             <option value="">Любой</option>
-                            <option value="сформирован">Сформирован</option>
-                            <option value="завершён">Завершён</option>
-                            <option value="отклонён">Отклонён</option>
+                            <option value="сформирована">Сформирована</option>
+                            <option value="завершена">Завершена</option>
+                            <option value="отклонена">Отклонена</option>
                         </Form.Select>
                     </InputGroup>
                     <DateTimePicker
@@ -93,7 +93,6 @@ const AllMissions = () => {
                             <th className='text-center'>Дата создания</th>
                             <th className='text-center'>Дата формирования</th>
                             <th className='text-center'>Дата завершения</th>
-                            <th className='text-center'>Дата начала миссии</th>
                             <th className='text-center'></th>
                         </tr>
                     </thead>
@@ -106,7 +105,6 @@ const AllMissions = () => {
                                 <td className='text-center'>{mission.date_created}</td>
                                 <td className='text-center'>{mission.date_approve}</td>
                                 <td className='text-center'>{mission.date_end}</td>
-                                <td className='text-center'>{mission.date_start_mission}</td>
                                 <td className=''>
                                     <Col className='d-flex flex-col align-items-center justify-content-center'>
                                         <Link to={`/missions/${mission.uuid}`} className='text-decoration-none' >

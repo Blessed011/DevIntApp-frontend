@@ -15,9 +15,7 @@ export interface IMission {
     date_created: string
     date_approve: string | null
     date_end: string | null
-    description: string | null
     moderator: string | null
     customer: string
-    date_start_mission: string
     funding_status: string | null
 }

@@ -24,8 +24,6 @@ const MissionInfo = () => {
     const location = useLocation().pathname;
     const [edit, setEdit] = useState(false)
     const [name, setName] = useState<string>('')
-    const [startMission, setStartMission] = useState<string>('')
-    const [description, setDescription] = useState<string>('')
     const navigate = useNavigate()
 
     const getData = () => {
@@ -37,9 +35,7 @@ const MissionInfo = () => {
                     setFlight([])
                 } else {
                     setMission(data.mission);
-                    setStartMission(data.mission.date_start_mission ? data.mission.date_start_mission : '')
                     setFlight(data.modules);
-                    setDescription(data.mission.description ? data.mission.description : '')
                     setName(data.mission.name ? data.mission.name : '')
 
                 }
@@ -57,35 +53,7 @@ const MissionInfo = () => {
             return
         }
         axiosAPI.put(`/missions`,
-            { startMission: startMission },
-            {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(() => getData())
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
-        setEdit(false);
-
-        axiosAPI.put(`/missions`,
             { name: name },
-            {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(() => getData())
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
-        setEdit(false);
-        
-        axiosAPI.put(`/missions`,
-            { description: description },
             {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
@@ -188,24 +156,6 @@ const MissionInfo = () => {
                                     <InputGroup.Text className='t-input-group-text'>{mission.status === 'отклонена' ? 'Отклонена' : 'Подтверждена'}</InputGroup.Text>
                                     <Form.Control readOnly value={mission.date_approve ? mission.date_approve : ''} />
                                 </InputGroup>}
-                                <InputGroup className='mb-1'>
-                                    <InputGroup.Text className='t-input-group-text'>Описание</InputGroup.Text>
-                                    <Form.Control
-                                        readOnly={!edit}
-                                        value={description}
-                                        onChange={(e) => setDescription(e.target.value)}
-                                    />
-                                    {!edit && mission.status === 'черновик' && <Button onClick={() => setEdit(true)}>Изменить</Button>}
-                                    {edit && <Button variant='success' onClick={update}>Сохранить</Button>}
-                                    {edit && <Button
-                                        variant='danger'
-                                        onClick={() => {
-                                            setDescription(mission.description ? mission.description : '');
-                                            setEdit(false)
-                                        }}>
-                                        Отменить
-                                    </Button>}
-                                </InputGroup>
                                 {mission.status != 'черновик' &&
                                     <InputGroup className='mb-1'>
                                         <InputGroup.Text className='t-input-group-text'>Статус финансирования</InputGroup.Text>
