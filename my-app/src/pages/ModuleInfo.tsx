@@ -49,7 +49,7 @@ const ModuleInfo: FC = () => {
             <h3 className='text-center'>Такого модуля не существует</h3>
         )
     ) : (
-        <LoadAnimation />
+        <LoadAnimation children={undefined} loaded={true} />
     )
 }
 

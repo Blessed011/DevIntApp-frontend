@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
-import { Card, Row, Col, Navbar, Nav, InputGroup, Form, Button, ButtonGroup } from 'react-bootstrap';
+import { Card, Row, Col, Navbar, InputGroup, Form, Button, ButtonGroup } from 'react-bootstrap';
 
 import { axiosAPI } from "../api";
 import { getMission } from '../api/Missions';
@@ -23,6 +23,7 @@ const MissionInfo = () => {
     const dispatch = useDispatch<AppDispatch>();
     const location = useLocation().pathname;
     const [edit, setEdit] = useState(false)
+    const [name, setName] = useState<string>('')
     const [startMission, setStartMission] = useState<string>('')
     const [description, setDescription] = useState<string>('')
     const navigate = useNavigate()
@@ -39,13 +40,15 @@ const MissionInfo = () => {
                     setStartMission(data.mission.date_start_mission ? data.mission.date_start_mission : '')
                     setFlight(data.modules);
                     setDescription(data.mission.description ? data.mission.description : '')
+                    setName(data.mission.name ? data.mission.name : '')
 
                 }
+                setLoaded(true)
             })
             .catch((error) => {
                 console.error("Error fetching data:", error);
+                setLoaded(true)
             });
-        setLoaded(true)
     }
 
     const update = () => {
@@ -55,6 +58,34 @@ const MissionInfo = () => {
         }
         axiosAPI.put(`/missions`,
             { startMission: startMission },
+            {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(() => getData())
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+        setEdit(false);
+
+        axiosAPI.put(`/missions`,
+            { name: name },
+            {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(() => getData())
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+        setEdit(false);
+        
+        axiosAPI.put(`/missions`,
+            { description: description },
             {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
@@ -99,7 +130,7 @@ const MissionInfo = () => {
             });
     }
 
-    const deleteT = () => {
+    const deleteM = () => {
         const accessToken = localStorage.getItem('access_token');
         if (!accessToken) {
             return
@@ -113,85 +144,101 @@ const MissionInfo = () => {
             });
     }
 
-    return loaded ? (
-        mission ? (
-            <>
-                <Navbar>
-                    <Nav>
-                        <Breadcrumbs />
-                    </Nav>
-                </Navbar>
-                <Col className='p-3'>
-                    <Card className='shadow text center text-md-start'>
-                        <Card.Body>
-                            <InputGroup className='mb-1'>
-                                <InputGroup.Text>Статус</InputGroup.Text>
-                                <Form.Control readOnly value={mission.status} />
-                            </InputGroup>
-                            <InputGroup className='mb-1'>
-                                <InputGroup.Text>Создана</InputGroup.Text>
-                                <Form.Control readOnly value={mission.date_created} />
-                            </InputGroup>
-                            <InputGroup className='mb-1'>
-                                <InputGroup.Text>Сформирована</InputGroup.Text>
-                                <Form.Control readOnly value={mission.date_approve ? mission.date_approve : ''} />
-                            </InputGroup>
-                            <InputGroup className='mb-1'>
-                                <InputGroup.Text>{mission.status === 'отклонена' ? 'Отклонена' : 'Подтверждена'}</InputGroup.Text>
-                                <Form.Control readOnly value={mission.date_end ? mission.date_end : ''} />
-                            </InputGroup>
-                            <InputGroup className='mb-1'>
-                                <InputGroup.Text>Название</InputGroup.Text>
-                                <Form.Control
-                                    readOnly={!edit}
-                                    value={description}
-                                    onChange={(e) => setDescription(e.target.value)}
-                                />
-                                {!edit && mission.status === 'черновик' && <Button onClick={() => setEdit(true)}>Изменить</Button>}
-                                {edit && <Button variant='success' onClick={update}>Сохранить</Button>}
-                                {edit && <Button
-                                    variant='danger'
-                                    onClick={() => {
-                                        setDescription(mission.description ? mission.description : '');
-                                        setEdit(false)
-                                    }}>
-                                    Отменить
-                                </Button>}
-                            </InputGroup>
-                            {mission.status != 'черновик' &&
+    return (
+        <LoadAnimation loaded={loaded}>
+            {mission ? (
+                <>
+                    <Navbar>
+                            <Breadcrumbs />
+                    </Navbar>
+                    <Col className='p-3 pt-1'>
+                        <Card className='shadow text center text-md-start'>
+                            <Card.Body>
                                 <InputGroup className='mb-1'>
-                                    <InputGroup.Text>Статус финансирования</InputGroup.Text>
-                                    <Form.Control readOnly value={mission.funding_status ? mission.funding_status : ''} />
+                                    <InputGroup.Text className='t-input-group-text'>Название</InputGroup.Text>
+                                    <Form.Control
+                                        readOnly={!edit}
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />
+                                    {!edit && mission.status === 'черновик' && <Button onClick={() => setEdit(true)}>Изменить</Button>}
+                                    {edit && <Button variant='success' onClick={update}>Сохранить</Button>}
+                                    {edit && <Button
+                                        variant='danger'
+                                        onClick={() => {
+                                            setName(mission.name ? mission.name : '');
+                                            setEdit(false)
+                                        }}>
+                                        Отменить
+                                    </Button>}
+                                </InputGroup>
+                                <InputGroup className='mb-1'>
+                                    <InputGroup.Text className='t-input-group-text'>Статус</InputGroup.Text>
+                                    <Form.Control readOnly value={mission.status} />
+                                </InputGroup>
+                                <InputGroup className='mb-1'>
+                                    <InputGroup.Text className='t-input-group-text'>Создана</InputGroup.Text>
+                                    <Form.Control readOnly value={mission.date_created} />
+                                </InputGroup>
+                                <InputGroup className='mb-1'>
+                                    <InputGroup.Text className='t-input-group-text'>Сформирована</InputGroup.Text>
+                                    <Form.Control readOnly value={mission.date_approve ? mission.date_approve : ''} />
+                                </InputGroup>
+                                {(mission.status == 'отклонена' || mission.status == 'завершена') && <InputGroup className='mb-1'>
+                                    <InputGroup.Text className='t-input-group-text'>{mission.status === 'отклонена' ? 'Отклонена' : 'Подтверждена'}</InputGroup.Text>
+                                    <Form.Control readOnly value={mission.date_approve ? mission.date_approve : ''} />
                                 </InputGroup>}
-                            {mission.status == 'черновик' &&
-                                <ButtonGroup className='flex-grow-1 w-100'>
-                                    <Button variant='success' onClick={confirm}>Сформировать</Button>
-                                    <Button variant='danger' onClick={deleteT}>Удалить</Button>
-                                </ButtonGroup>}
-                        </Card.Body>
-                    </Card>
-                    {flight && <Row className='row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 px-1 mt-2'>
-                        {flight.map((module) => (
-                            <div className='d-flex p-2 justify-content-center' key={module.uuid}>
-                                <SmallCCard  {...module}>
-                                    {mission.status == 'черновик' &&
-                                        <Button
-                                            variant='outline-danger'
-                                            className='mt-0 rounded-bottom'
-                                            onClick={delFromMission(module.uuid)}>
-                                            Удалить
-                                        </Button>}
-                                </SmallCCard>
-                            </div>
-                        ))}
-                    </Row>}
-                </Col>
-            </>
-        ) : (
-            <h4 className='text-center'>Такой миссии не существует</h4>
-        )
-    ) : (
-        <LoadAnimation />
+                                <InputGroup className='mb-1'>
+                                    <InputGroup.Text className='t-input-group-text'>Описание</InputGroup.Text>
+                                    <Form.Control
+                                        readOnly={!edit}
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                    />
+                                    {!edit && mission.status === 'черновик' && <Button onClick={() => setEdit(true)}>Изменить</Button>}
+                                    {edit && <Button variant='success' onClick={update}>Сохранить</Button>}
+                                    {edit && <Button
+                                        variant='danger'
+                                        onClick={() => {
+                                            setDescription(mission.description ? mission.description : '');
+                                            setEdit(false)
+                                        }}>
+                                        Отменить
+                                    </Button>}
+                                </InputGroup>
+                                {mission.status != 'черновик' &&
+                                    <InputGroup className='mb-1'>
+                                        <InputGroup.Text className='t-input-group-text'>Статус финансирования</InputGroup.Text>
+                                        <Form.Control readOnly value={mission.funding_status ? mission.funding_status : ''} />
+                                    </InputGroup>}
+                                {mission.status == 'черновик' &&
+                                    <ButtonGroup className='flex-grow-1 w-100'>
+                                        <Button variant='success' onClick={confirm}>Сформировать</Button>
+                                        <Button variant='danger' onClick={deleteM}>Удалить</Button>
+                                    </ButtonGroup>}
+                            </Card.Body>
+                        </Card>
+                        {flight && <Row className='row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 px-1 mt-2'>
+                            {flight.map((module) => (
+                                <div className='d-flex p-2 justify-content-center' key={module.uuid}>
+                                    <SmallCCard  {...module}>
+                                        {mission.status == 'черновик' &&
+                                            <Button
+                                                variant='outline-danger'
+                                                className='mt-0 rounded-bottom'
+                                                onClick={delFromMission(module.uuid)}>
+                                                Удалить
+                                            </Button>}
+                                    </SmallCCard>
+                                </div>
+                            ))}
+                        </Row>}
+                    </Col>
+                </>
+            ) : (
+                <h4 className='text-center'>Такой миссии не существует</h4>
+            )}
+        </LoadAnimation>
     )
 }
 

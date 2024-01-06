@@ -84,8 +84,8 @@ const AllModules = () => {
                 </Form>
             </Navbar>
             <div className='row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 px-1'>
-                {modules ? (
-                    modules.map((module) => (
+                <LoadAnimation loaded={modules.length > 0}>
+                    {modules.map((module) => (
                         <div className='d-flex p-2 justify-content-center' key={module.uuid}>
                             <SmallCCard  {...module}>
                                 {role != 0 &&
@@ -98,10 +98,8 @@ const AllModules = () => {
                                 }
                             </SmallCCard>
                         </div>
-                    ))
-                ) : (
-                    <LoadAnimation />
-                )}
+                    ))}
+                </LoadAnimation>
             </div>
             {!!role && <Link to={`/missions/${draft}`}>
                 <Button
