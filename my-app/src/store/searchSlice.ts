@@ -4,16 +4,16 @@ interface searchState {
     name: string
 
     status: string
-    dateApproveStart: string | null
-    dateApproveEnd: string | null
+    formationDateStart: string | null
+    formationDateEnd: string | null
 }
 
 const initialState: searchState = {
     name: '',
 
     status: '',
-    dateApproveStart: null,
-    dateApproveEnd: null,
+    formationDateStart: null,
+    formationDateEnd: null,
 }
 
 const searchSlice = createSlice({
@@ -27,10 +27,10 @@ const searchSlice = createSlice({
             state.status = payload
         },
         setDateStart: (state, { payload }) => {
-            state.dateApproveStart = payload
+            state.formationDateStart = payload
         },
         setDateEnd: (state, { payload }) => {
-            state.dateApproveEnd = payload
+            state.formationDateEnd = payload
         },
     },
 });

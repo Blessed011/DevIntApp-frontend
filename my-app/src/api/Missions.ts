@@ -34,10 +34,10 @@ export async function getMissions(
             params: {
                 ...(status && { status: status }),
                 ...(startDate && {
-                    date_approve_start: format(new Date(startDate), 'yyyy-MM-dd HH:mm'),
+                    formation_date_start: format(new Date(startDate), 'yyyy-MM-dd HH:mm'),
                 }),
                 ...(endDate && {
-                    date_approve_end: format(new Date(endDate), 'yyyy-MM-dd HH:mm'),
+                    formation_date_end: format(new Date(endDate), 'yyyy-MM-dd HH:mm'),
                 }),
             },
             headers: {
@@ -48,12 +48,12 @@ export async function getMissions(
         .then((response) =>
             response.data.missions.map((tr: IMission) => ({
                 ...tr,
-                date_created: formatDate(new Date(tr.date_created)),
-                date_approve: tr.date_approve
-                    ? formatDate(new Date(tr.date_approve))
+                creation_date: formatDate(new Date(tr.creation_date)),
+                formation_date: tr.formation_date
+                    ? formatDate(new Date(tr.formation_date))
                     : null,
-                date_end: tr.date_end
-                    ? formatDate(new Date(tr.date_end))
+                completion_date: tr.completion_date
+                    ? formatDate(new Date(tr.completion_date))
                     : null,
             }))
         );
@@ -80,12 +80,12 @@ export async function getMission(id: string | undefined): Promise<MissionRespons
         .then(response => {
             const modifiedMission: IMission = {
                 ...response.data.mission,
-                date_created: formatDate(new Date(response.data.mission.date_created)),
-                date_approve: response.data.mission.date_approve
-                    ? formatDate(new Date(response.data.mission.date_approve))
+                creation_date: formatDate(new Date(response.data.mission.creation_date)),
+                formation_date: response.data.mission.formation_date
+                    ? formatDate(new Date(response.data.mission.formation_date))
                     : null,
-                date_end: response.data.mission.date_end
-                    ? formatDate(new Date(response.data.mission.date_end))
+                completion_date: response.data.mission.completion_date
+                    ? formatDate(new Date(response.data.mission.completion_date))
                     : null,
             };
 

@@ -14,7 +14,6 @@ import LoadAnimation from '../components/LoadAnimation';
 import { SmallCCard } from '../components/ModuleCard';
 import Breadcrumbs from '../components/Breadcrumbs';
 
-//????????????????????????????????????????????????????????????????????????????
 const MissionInfo = () => {
     let { mission_id } = useParams()
     const [mission, setMission] = useState<IMission | null>(null)
@@ -35,8 +34,8 @@ const MissionInfo = () => {
                     setFlight([])
                 } else {
                     setMission(data.mission);
-                    setFlight(data.modules);
-                    setName(data.mission.name ? data.mission.name : '')
+                    setName(data.mission.name ? data.mission.name : '');
+                    setFlight(data.modules)
 
                 }
                 setLoaded(true)
@@ -123,6 +122,22 @@ const MissionInfo = () => {
                         <Card className='shadow text center text-md-start'>
                             <Card.Body>
                                 <InputGroup className='mb-1'>
+                                    <InputGroup.Text className='t-input-group-text'>Статус</InputGroup.Text>
+                                    <Form.Control readOnly value={mission.status} />
+                                </InputGroup>
+                                <InputGroup className='mb-1'>
+                                    <InputGroup.Text className='t-input-group-text'>Создана</InputGroup.Text>
+                                    <Form.Control readOnly value={mission.creation_date} />
+                                </InputGroup>
+                                <InputGroup className='mb-1'>
+                                    <InputGroup.Text className='t-input-group-text'>Сформирована</InputGroup.Text>
+                                    <Form.Control readOnly value={mission.formation_date ? mission.formation_date : ''} />
+                                </InputGroup>
+                                {(mission.status == 'отклонена' || mission.status == 'завершена') && <InputGroup className='mb-1'>
+                                    <InputGroup.Text className='t-input-group-text'>{mission.status === 'отклонена' ? 'Отклонена' : 'Подтверждена'}</InputGroup.Text>
+                                    <Form.Control readOnly value={mission.formation_date ? mission.formation_date : ''} />
+                                </InputGroup>}
+                                <InputGroup className='mb-1'>
                                     <InputGroup.Text className='t-input-group-text'>Название</InputGroup.Text>
                                     <Form.Control
                                         readOnly={!edit}
@@ -140,22 +155,6 @@ const MissionInfo = () => {
                                         Отменить
                                     </Button>}
                                 </InputGroup>
-                                <InputGroup className='mb-1'>
-                                    <InputGroup.Text className='t-input-group-text'>Статус</InputGroup.Text>
-                                    <Form.Control readOnly value={mission.status} />
-                                </InputGroup>
-                                <InputGroup className='mb-1'>
-                                    <InputGroup.Text className='t-input-group-text'>Создана</InputGroup.Text>
-                                    <Form.Control readOnly value={mission.date_created} />
-                                </InputGroup>
-                                <InputGroup className='mb-1'>
-                                    <InputGroup.Text className='t-input-group-text'>Сформирована</InputGroup.Text>
-                                    <Form.Control readOnly value={mission.date_approve ? mission.date_approve : ''} />
-                                </InputGroup>
-                                {(mission.status == 'отклонена' || mission.status == 'завершена') && <InputGroup className='mb-1'>
-                                    <InputGroup.Text className='t-input-group-text'>{mission.status === 'отклонена' ? 'Отклонена' : 'Подтверждена'}</InputGroup.Text>
-                                    <Form.Control readOnly value={mission.date_approve ? mission.date_approve : ''} />
-                                </InputGroup>}
                                 {mission.status != 'черновик' &&
                                     <InputGroup className='mb-1'>
                                         <InputGroup.Text className='t-input-group-text'>Статус финансирования</InputGroup.Text>

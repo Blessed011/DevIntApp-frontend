@@ -17,8 +17,8 @@ import DateTimePicker from '../components/DatePicker';
 const AllMissions = () => {
     const [missions, setMissions] = useState<IMission[]>([])
     const statusFilter = useSelector((state: RootState) => state.search.status);
-    const startDate = useSelector((state: RootState) => state.search.dateApproveStart);
-    const endDate = useSelector((state: RootState) => state.search.dateApproveEnd);
+    const startDate = useSelector((state: RootState) => state.search.formationDateStart);
+    const endDate = useSelector((state: RootState) => state.search.formationDateEnd);
     const role = useSelector((state: RootState) => state.user.role);
     const dispatch = useDispatch<AppDispatch>();
     const location = useLocation().pathname;
@@ -88,11 +88,11 @@ const AllMissions = () => {
                     <thead>
                         <tr>
                             {role == MODERATOR && <th className='text-center'>Пользователь</th>}
-                            <th className='text-center'>Название</th>
                             <th className='text-center'>Статус</th>
                             <th className='text-center'>Дата создания</th>
                             <th className='text-center'>Дата формирования</th>
                             <th className='text-center'>Дата завершения</th>
+                            <th className='text-center'>Название</th>
                             <th className='text-center'></th>
                         </tr>
                     </thead>
@@ -100,11 +100,11 @@ const AllMissions = () => {
                         {missions.map((mission) => (
                             <tr key={mission.uuid}>
                                 {role == MODERATOR && <td className='text-center'>{mission.customer}</td>}
-                                <td className='text-center'>{mission.name}</td>
                                 <td className='text-center'>{mission.status}</td>
-                                <td className='text-center'>{mission.date_created}</td>
-                                <td className='text-center'>{mission.date_approve}</td>
-                                <td className='text-center'>{mission.date_end}</td>
+                                <td className='text-center'>{mission.creation_date}</td>
+                                <td className='text-center'>{mission.formation_date}</td>
+                                <td className='text-center'>{mission.completion_date}</td>
+                                <td className='text-center'>{mission.name}</td>
                                 <td className=''>
                                     <Col className='d-flex flex-col align-items-center justify-content-center'>
                                         <Link to={`/missions/${mission.uuid}`} className='text-decoration-none' >
