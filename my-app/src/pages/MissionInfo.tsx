@@ -11,7 +11,7 @@ import { AppDispatch } from "../store";
 import { addToHistory } from "../store/historySlice";
 
 import LoadAnimation from '../components/LoadAnimation';
-import { SmallCCard } from '../components/ModuleCard';
+import ModuleCard from '../components/ModuleCard';
 import Breadcrumbs from '../components/Breadcrumbs';
 
 const MissionInfo = () => {
@@ -157,7 +157,7 @@ const MissionInfo = () => {
                                 </InputGroup>
                                 {mission.status != 'черновик' &&
                                     <InputGroup className='mb-1'>
-                                        <InputGroup.Text className='t-input-group-text'>Статус финансирования</InputGroup.Text>
+                                        <InputGroup.Text className='t-input-group-text'>Статус финанс-я</InputGroup.Text>
                                         <Form.Control readOnly value={mission.funding_status ? mission.funding_status : ''} />
                                     </InputGroup>}
                                 {mission.status == 'черновик' &&
@@ -170,7 +170,7 @@ const MissionInfo = () => {
                         {flight && <Row className='row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 px-1 mt-2'>
                             {flight.map((module) => (
                                 <div className='d-flex p-2 justify-content-center' key={module.uuid}>
-                                    <SmallCCard  {...module}>
+                                    <ModuleCard  {...module}>
                                         {mission.status == 'черновик' &&
                                             <Button
                                                 variant='outline-danger'
@@ -178,7 +178,7 @@ const MissionInfo = () => {
                                                 onClick={delFromMission(module.uuid)}>
                                                 Удалить
                                             </Button>}
-                                    </SmallCCard>
+                                    </ModuleCard>
                                 </div>
                             ))}
                         </Row>}

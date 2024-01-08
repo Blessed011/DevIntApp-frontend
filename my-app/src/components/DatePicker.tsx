@@ -18,7 +18,7 @@ const DateTimePicker: FC<DatePickerProps> = ({ selected, onChange }) => {
             variant="outline-dark"
             ref={ref}
             size="sm"
-            className="text-nowrap shadow-sm"
+            className="text-nowrap"
             style={{ paddingRight: '1.5rem', minWidth: '137px' }}
             {...props}
         >
@@ -37,7 +37,7 @@ const DateTimePicker: FC<DatePickerProps> = ({ selected, onChange }) => {
             timeCaption="Время"
             dateFormat="HH:mm MM.d.yyyy"
             customInput={<CustomInput />}
-            className="text-nowrap"
+            className="text-nowrap shadow-sm"
         />
     );
 };

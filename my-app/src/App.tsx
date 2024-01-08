@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 
-import { AllModules, ModuleInfo, AllMissions, MissionInfo, Authorization, Registration } from './pages'
+import { AllModules, ModuleInfo, ModuleEdit, ModulesTable, AllMissions, MissionInfo, Authorization, Registration } from './pages'
 import NavigationBar from './components/NavBar';
 
 import { AppDispatch } from "./store";
@@ -30,6 +30,8 @@ function App() {
           <Route path="/" element={<Navigate to="/modules" />} />
           <Route path="/modules" element={<AllModules />} />
           <Route path="/modules/:module_id" element={<ModuleInfo />} />
+          <Route path="/modules-edit" element={<AuthCheck allowedRoles={[MODERATOR]}><ModulesTable /></AuthCheck>} />
+          <Route path="/modules-edit/:container_id" element={<AuthCheck allowedRoles={[MODERATOR]}><ModuleEdit /></AuthCheck>} />
 
           <Route path="/missions" element={<AuthCheck allowedRoles={[CUSTOMER, MODERATOR]}><AllMissions /></AuthCheck>} />
           <Route path="/missions/:mission_id" element={<AuthCheck allowedRoles={[CUSTOMER, MODERATOR]}><MissionInfo /></AuthCheck>} />

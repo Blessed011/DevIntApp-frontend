@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, Link } from 'react-router-dom';
-import { Navbar, Form, Button, Table, Col, InputGroup } from 'react-bootstrap';
+import { Navbar, Form, Button, Table, InputGroup } from 'react-bootstrap';
 
 import { getMissions } from '../api/Missions';
 import { IMission } from "../models";
@@ -53,12 +53,11 @@ const AllMissions = () => {
         <>
             <Navbar>
                 <Form className="d-flex flex-row align-items-stretch flex-grow-1 gap-2" onSubmit={handleSearch}>
-                    <InputGroup size='sm'>
+                    <InputGroup size='sm' className='shadow-sm'>
                         <InputGroup.Text >Статус</InputGroup.Text>
                         <Form.Select
                             defaultValue={statusFilter}
                             onChange={(status) => dispatch(setStatus(status.target.value))}
-                            className="shadow-sm"
                         >
                             <option value="">Любой</option>
                             <option value="сформирована">Сформирована</option>
@@ -67,11 +66,11 @@ const AllMissions = () => {
                         </Form.Select>
                     </InputGroup>
                     <DateTimePicker
-                        selected={endDate ? new Date(endDate) : null}
+                        selected={startDate ? new Date(startDate) : null}
                         onChange={(date: Date) => dispatch(setDateStart(date ? date.toISOString() : null))}
                     />
                     <DateTimePicker
-                        selected={startDate ? new Date(startDate) : null}
+                        selected={endDate ? new Date(endDate) : null}
                         onChange={(date: Date) => dispatch(setDateEnd(date ? date.toISOString() : null))}
                     />
                     <Button
@@ -105,18 +104,16 @@ const AllMissions = () => {
                                 <td className='text-center'>{mission.formation_date}</td>
                                 <td className='text-center'>{mission.completion_date}</td>
                                 <td className='text-center'>{mission.name}</td>
-                                <td className=''>
-                                    <Col className='d-flex flex-col align-items-center justify-content-center'>
-                                        <Link to={`/missions/${mission.uuid}`} className='text-decoration-none' >
-                                            <Button
-                                                variant='outline-secondary'
-                                                size='sm'
-                                                className='align-self-center'
-                                            >
-                                                Подробнее
-                                            </Button>
-                                        </Link>
-                                    </Col>
+                                <td className='p-1 text-center align-middle'>
+                                    <Link to={`/missions/${mission.uuid}`} className='text-decoration-none' >
+                                        <Button
+                                            variant='outline-secondary'
+                                            size='sm'
+                                            className='align-self-center'
+                                        >
+                                            Подробнее
+                                        </Button>
+                                    </Link>
                                 </td>
                             </tr>
                         ))}

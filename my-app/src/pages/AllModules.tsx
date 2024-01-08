@@ -12,7 +12,7 @@ import { AppDispatch, RootState } from "../store";
 import { setName } from "../store/searchSlice"                            ////   setName oder setType ?????
 import { clearHistory, addToHistory } from "../store/historySlice"
 
-import { SmallCCard } from '../components/ModuleCard';
+import ModuleCard from '../components/ModuleCard';
 import LoadAnimation from '../components/LoadAnimation';
 
 const AllModules = () => {
@@ -36,6 +36,7 @@ const AllModules = () => {
 
     const handleSearch = (event: React.FormEvent<any>) => {
         event.preventDefault();
+        setModules([])
         getModules();
     }
 
@@ -87,7 +88,7 @@ const AllModules = () => {
                 <LoadAnimation loaded={modules.length > 0}>
                     {modules.map((module) => (
                         <div className='d-flex p-2 justify-content-center' key={module.uuid}>
-                            <SmallCCard  {...module}>
+                            <ModuleCard  {...module}>
                                 {role != 0 &&
                                     <Button
                                         variant='outline-primary'
@@ -96,7 +97,7 @@ const AllModules = () => {
                                         Добавить в корзину
                                     </Button>
                                 }
-                            </SmallCCard>
+                            </ModuleCard>
                         </div>
                     ))}
                 </LoadAnimation>
