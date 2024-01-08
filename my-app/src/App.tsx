@@ -31,7 +31,7 @@ function App() {
           <Route path="/modules" element={<AllModules />} />
           <Route path="/modules/:module_id" element={<ModuleInfo />} />
           <Route path="/modules-edit" element={<AuthCheck allowedRoles={[MODERATOR]}><ModulesTable /></AuthCheck>} />
-          <Route path="/modules-edit/:container_id" element={<AuthCheck allowedRoles={[MODERATOR]}><ModuleEdit /></AuthCheck>} />
+          <Route path="/modules-edit/:module_id" element={<AuthCheck allowedRoles={[MODERATOR]}><ModuleEdit /></AuthCheck>} />
 
           <Route path="/missions" element={<AuthCheck allowedRoles={[CUSTOMER, MODERATOR]}><AllMissions /></AuthCheck>} />
           <Route path="/missions/:mission_id" element={<AuthCheck allowedRoles={[CUSTOMER, MODERATOR]}><MissionInfo /></AuthCheck>} />

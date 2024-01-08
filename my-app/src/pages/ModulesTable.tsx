@@ -76,10 +76,6 @@ const ContainerTable = () => {
                         <tr>
                             <th className='text-center'>Изображение</th>
                             <th className='text-center'>Название</th>
-                            {/* <th className='text-center'>Описание</th>
-                            <th className='text-center'>Масса</th>
-                            <th className='text-center'>Длина</th>
-                            <th className='text-center'>Димаетр</th> */}
                             <th className=''></th>
                         </tr>
                     </thead>
@@ -90,10 +86,6 @@ const ContainerTable = () => {
                                     <CardImage url={module.image_url} />
                                 </td>
                                 <td className='text-center'>{module.name}</td>
-                                {/* <td className='text-center'>{module.description}</td>
-                                <td className='text-center'>{module.mass}</td>
-                                <td className='text-center'>{module.length}</td>
-                                <td className='text-center'>{module.diameter}</td> */}
                                 <td className='text-center align-middle p-0'>
                                     <Table className='m-0'>
                                         <tbody>

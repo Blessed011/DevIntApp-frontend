@@ -27,7 +27,7 @@ const ModuleInfo: FC = () => {
         const getData = async () => {
             setLoaded(false);
             let data: IModule | undefined;
-            let name: string;           //mb delete
+            let newname: string;           //mb delete
             try {
                 if (module_id == 'new') {
                     data = {
@@ -39,14 +39,14 @@ const ModuleInfo: FC = () => {
                         diameter: "",
                         image_url: "",
                     }
-                    name = 'Новый модуль'    //mb delete
+                    newname = 'Новый модуль'    //mb delete
                     setEdit(true)
                 } else {
                     data = await getModule(module_id);
-                    name = data ? data.name : ''
+                    newname = data ? data.name : ''
                 }
                 setModule(data);
-                dispatch(addToHistory({ path: location, name: name }));
+                dispatch(addToHistory({ path: location, name: newname }));
             } finally {
                 setLoaded(true);
             }
@@ -58,10 +58,6 @@ const ModuleInfo: FC = () => {
 
     const changeString = (e: ChangeEvent<HTMLInputElement>) => {
         setModule(module ? { ...module, [e.target.id]: e.target.value } : undefined)
-    }
-
-    const changeNumber = (e: ChangeEvent<HTMLInputElement>) => {
-        setModule(module ? { ...module, [e.target.id]: parseInt(e.target.value) } : undefined)
     }
 
     const save = (event: React.FormEvent<HTMLFormElement>) => {
