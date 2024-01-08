@@ -89,6 +89,7 @@ const AllMissions = () => {
                         <tr>
                             {role == MODERATOR && <th className='text-center'>Пользователь</th>}
                             <th className='text-center'>Статус</th>
+                            <th className='text-center'>Статус финанс-я</th>
                             <th className='text-center'>Дата создания</th>
                             <th className='text-center'>Дата формирования</th>
                             <th className='text-center'>Дата завершения</th>
@@ -101,6 +102,7 @@ const AllMissions = () => {
                             <tr key={mission.uuid}>
                                 {role == MODERATOR && <td className='text-center'>{mission.customer}</td>}
                                 <td className='text-center'>{mission.status}</td>
+                                <td className='text-center'>{mission.funding_status}</td>
                                 <td className='text-center'>{mission.creation_date}</td>
                                 <td className='text-center'>{mission.formation_date}</td>
                                 <td className='text-center'>{mission.completion_date}</td>
