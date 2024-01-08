@@ -7,6 +7,7 @@ import { axiosAPI } from '../api';
 
 import { AppDispatch, RootState } from "../store";
 import { resetLogin, resetRole } from "../store/userSlice";
+import { reset } from "../store/searchSlice";
 import { MODERATOR } from "./AuthCheck";
 
 function NavigationBar() {
@@ -23,6 +24,7 @@ function NavigationBar() {
             .then(_ => {
                 dispatch(resetLogin())
                 dispatch(resetRole())
+                dispatch(reset())
                 localStorage.clear()
             })
             .catch((error) => {

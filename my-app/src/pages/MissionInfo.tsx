@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { Card, Row, Col, Navbar, InputGroup, Form, Button, ButtonGroup } from 'react-bootstrap';
 
@@ -7,12 +7,13 @@ import { axiosAPI } from "../api";
 import { getMission } from '../api/Missions';
 import { IModule, IMission } from "../models";
 
-import { AppDispatch } from "../store";
+import { AppDispatch, RootState } from "../store";
 import { addToHistory } from "../store/historySlice";
 
 import LoadAnimation from '../components/LoadAnimation';
 import ModuleCard from '../components/ModuleCard';
 import Breadcrumbs from '../components/Breadcrumbs';
+import { MODERATOR } from '../components/AuthCheck';
 
 const MissionInfo = () => {
     let { mission_id } = useParams()
@@ -21,6 +22,7 @@ const MissionInfo = () => {
     const [loaded, setLoaded] = useState(false)
     const dispatch = useDispatch<AppDispatch>();
     const location = useLocation().pathname;
+    const role = useSelector((state: RootState) => state.user.role);
     const [edit, setEdit] = useState(false)
     const [name, setName] = useState<string>('')
     const navigate = useNavigate()
@@ -101,9 +103,14 @@ const MissionInfo = () => {
             .then(_ => {
                 navigate('/modules')
             })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
+    }
+
+    const moderator_confirm = (confirm: boolean) => () => {
+        const accessToken = localStorage.getItem('access_token');
+        axiosAPI.put(`/missions/${mission?.uuid}/moderator_confirm`,
+            { confirm: confirm },
+            { headers: { 'Authorization': `Bearer ${accessToken}`, } })
+            .then(() => getData())
     }
 
     return (
@@ -154,7 +161,14 @@ const MissionInfo = () => {
                                     <InputGroup className='mb-1'>
                                         <InputGroup.Text className='t-input-group-text'>Статус финанс-я</InputGroup.Text>
                                         <Form.Control readOnly value={mission.funding_status ? mission.funding_status : ''} />
-                                    </InputGroup>}
+                                    </InputGroup>
+                                }
+                                {mission.status == 'сформирована' && role == MODERATOR &&
+                                    <ButtonGroup className='flex-grow-1 w-100'>
+                                        <Button variant='success' onClick={moderator_confirm(true)}>Подтвердить</Button>
+                                        <Button variant='danger' onClick={moderator_confirm(false)}>Отменить</Button>
+                                    </ButtonGroup>
+                                }
                                 {mission.status == 'черновик' &&
                                     <ButtonGroup className='flex-grow-1 w-100'>
                                         <Button variant='success' onClick={confirm}>Сформировать</Button>

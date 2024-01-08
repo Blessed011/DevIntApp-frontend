@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, Link } from 'react-router-dom';
-import { Navbar, Form, Button, Table, InputGroup } from 'react-bootstrap';
+import { Navbar, Form, Button, Table, InputGroup, ButtonGroup } from 'react-bootstrap';
 
 import { getMissions } from '../api/Missions';
 import { IMission } from "../models";
+import { axiosAPI } from '../api'
 
 import { AppDispatch, RootState } from "../store";
 import { setUser, setStatus, setDateStart, setDateEnd } from "../store/searchSlice";
@@ -49,6 +50,14 @@ const AllMissions = () => {
         return () => clearInterval(intervalId);
     }, [dispatch, userFilter, statusFilter, startDate, endDate]);
 
+    const moderator_confirm = (id: string, confirm: boolean) => () => {
+        const accessToken = localStorage.getItem('access_token');
+        axiosAPI.put(`/missions/${id}/moderator_confirm`,
+            { confirm: confirm },
+            { headers: { 'Authorization': `Bearer ${accessToken}`, } })
+            .then(() => setMissions(prevMissions => [...prevMissions]))
+    }
+
 
     return (
         <>
@@ -91,7 +100,7 @@ const AllMissions = () => {
                 <Table bordered hover>
                     <thead>
                         <tr>
-                            {role == MODERATOR && <th className='text-center'>Пользователь</th>}
+                            {role == MODERATOR && <th className='text-center'>Создатель</th>}
                             <th className='text-center'>Статус</th>
                             <th className='text-center'>Статус финанс-я</th>
                             <th className='text-center'>Дата создания</th>
@@ -111,16 +120,27 @@ const AllMissions = () => {
                                 <td className='text-center'>{mission.formation_date}</td>
                                 <td className='text-center'>{mission.completion_date}</td>
                                 <td className='text-center'>{mission.name}</td>
-                                <td className='p-1 text-center align-middle'>
-                                    <Link to={`/missions/${mission.uuid}`} className='text-decoration-none' >
-                                        <Button
-                                            variant='outline-secondary'
-                                            size='sm'
-                                            className='align-self-center'
-                                        >
-                                            Подробнее
-                                        </Button>
-                                    </Link>
+                                <td className='p-0 text-center align-middle'>
+                                    <Table className='m-0'>
+                                        <tbody>
+                                            <tr>
+                                                <td className='py-1 border-0' style={{ background: 'transparent' }}>
+                                                    <Link to={`/missions/${mission.uuid}`}
+                                                        className='btn btn-sm btn-outline-secondary text-decoration-none w-100' >
+                                                        Подробнее
+                                                    </Link>
+                                                </td>
+                                            </tr>
+                                            {mission.status == 'сформирована' && role == MODERATOR && <tr>
+                                                <td className='py-1 border-0' style={{ background: 'transparent' }}>
+                                                    <ButtonGroup className='flex-grow-1 w-100'>
+                                                        <Button variant='outline-success' size='sm' onClick={moderator_confirm(mission.uuid, true)}>Подтвердить</Button>
+                                                        <Button variant='outline-danger' size='sm' onClick={moderator_confirm(mission.uuid, false)}>Отклонить</Button>
+                                                    </ButtonGroup>
+                                                </td>
+                                            </tr>}
+                                        </tbody>
+                                    </Table>
                                 </td>
                             </tr>
                         ))}

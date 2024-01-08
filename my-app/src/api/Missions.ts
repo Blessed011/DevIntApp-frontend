@@ -46,8 +46,7 @@ export async function getMissions(
                 'Content-Type': 'application/json',
             },
         })
-        .then((response) =>
-            response.data.missions
+        .then((response) => response.data.missions
             .filter((tr: IMission) => tr.customer.toLowerCase().includes(user.toLowerCase()))
             .map((tr: IMission) => ({
                 ...tr,

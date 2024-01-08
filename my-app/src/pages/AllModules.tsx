@@ -29,10 +29,6 @@ const AllModules = () => {
                 setModules(data.modules)
                 setDraft(data.draft_mission)
             })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
-
 
     const handleSearch = (event: React.FormEvent<any>) => {
         event.preventDefault();
@@ -56,12 +52,7 @@ const AllModules = () => {
             .then(() => {
                 getModules();
             })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
     }
-
-    console.log(draft)
 
     return (
         <>
