@@ -157,7 +157,7 @@ const MissionInfo = () => {
                                 </InputGroup>
                                 {mission.status != 'черновик' &&
                                     <InputGroup className='mb-1'>
-                                        <InputGroup.Text className='t-input-group-text'>Статус финансирования</InputGroup.Text>
+                                        <InputGroup.Text className='t-input-group-text'>Статус финанс-я</InputGroup.Text>
                                         <Form.Control readOnly value={mission.funding_status ? mission.funding_status : ''} />
                                     </InputGroup>}
                                 {mission.status == 'черновик' &&

@@ -67,11 +67,11 @@ const AllMissions = () => {
                         </Form.Select>
                     </InputGroup>
                     <DateTimePicker
-                        selected={endDate ? new Date(endDate) : null}
+                        selected={startDate ? new Date(startDate) : null}
                         onChange={(date: Date) => dispatch(setDateStart(date ? date.toISOString() : null))}
                     />
                     <DateTimePicker
-                        selected={startDate ? new Date(startDate) : null}
+                        selected={endDate ? new Date(endDate) : null}
                         onChange={(date: Date) => dispatch(setDateEnd(date ? date.toISOString() : null))}
                     />
                     <Button
