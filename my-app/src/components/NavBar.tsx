@@ -29,7 +29,7 @@ function NavigationBar() {
     }
 
     return (
-        <Navbar expand="sm" className='bg-dark' data-bs-theme="dark">
+        <Navbar expand="sm" className='bg-custom' data-bs-theme="dark">
             <div className='container-xl px-2 px-sm-3'>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
