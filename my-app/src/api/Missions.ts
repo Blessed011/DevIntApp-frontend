@@ -21,6 +21,7 @@ function formatDate(date: Date | null): string {
 }
 
 export async function getMissions(
+    user: string,
     status: string,
     startDate: string | null,
     endDate: string | null
@@ -46,7 +47,9 @@ export async function getMissions(
             },
         })
         .then((response) =>
-            response.data.missions.map((tr: IMission) => ({
+            response.data.missions
+            .filter((tr: IMission) => tr.customer.toLowerCase().includes(user.toLowerCase()))
+            .map((tr: IMission) => ({
                 ...tr,
                 creation_date: formatDate(new Date(tr.creation_date)),
                 formation_date: tr.formation_date

@@ -26,7 +26,6 @@ const MissionInfo = () => {
     const navigate = useNavigate()
 
     const getData = () => {
-        setLoaded(false)
         getMission(mission_id)
             .then(data => {
                 if (data === null) {
@@ -38,12 +37,7 @@ const MissionInfo = () => {
                     setFlight(data.modules)
 
                 }
-                setLoaded(true)
             })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-                setLoaded(true)
-            });
     }
 
     const update = () => {
@@ -67,8 +61,9 @@ const MissionInfo = () => {
     }
 
     useEffect(() => {
-        getData()
         dispatch(addToHistory({ path: location, name: "Миссия" }))
+        getData()
+        setLoaded(true)
     }, [dispatch]);
 
     const delFromMission = (id: string) => () => {
@@ -134,8 +129,8 @@ const MissionInfo = () => {
                                     <Form.Control readOnly value={mission.formation_date ? mission.formation_date : ''} />
                                 </InputGroup>
                                 {(mission.status == 'отклонена' || mission.status == 'завершена') && <InputGroup className='mb-1'>
-                                    <InputGroup.Text className='t-input-group-text'>{mission.status === 'отклонена' ? 'Отклонена' : 'Подтверждена'}</InputGroup.Text>
-                                    <Form.Control readOnly value={mission.formation_date ? mission.formation_date : ''} />
+                                    <InputGroup.Text className='t-input-group-text'>{mission.status === 'отклонена' ? 'Отклонена' : 'Завершена'}</InputGroup.Text>
+                                    <Form.Control readOnly value={mission.completion_date ? mission.completion_date : ''} />
                                 </InputGroup>}
                                 <InputGroup className='mb-1'>
                                     <InputGroup.Text className='t-input-group-text'>Название</InputGroup.Text>

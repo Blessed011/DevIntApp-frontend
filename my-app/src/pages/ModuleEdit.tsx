@@ -1,5 +1,5 @@
 import { FC, useEffect, useState, ChangeEvent, useRef } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { Card, Row, Navbar, FloatingLabel, InputGroup, Form, Col, Button, ButtonGroup } from 'react-bootstrap';
 
@@ -22,6 +22,7 @@ const ModuleInfo: FC = () => {
     const [edit, setEdit] = useState<boolean>(false)
     const [image, setImage] = useState<File | undefined>(undefined);
     const inputFile = useRef<HTMLInputElement | null>(null);
+    const navigate = useNavigate()
 
     useEffect(() => {
         const getData = async () => {
@@ -58,6 +59,12 @@ const ModuleInfo: FC = () => {
 
     const changeString = (e: ChangeEvent<HTMLInputElement>) => {
         setModule(module ? { ...module, [e.target.id]: e.target.value } : undefined)
+    }
+
+    const deleteModule = () => {
+        let accessToken = localStorage.getItem('access_token');
+        axiosAPI.delete(`/modules/${module_id}`, { headers: { 'Authorization': `Bearer ${accessToken}`, } })
+            .then(() => navigate('/modules-edit'))
     }
 
     const save = (event: React.FormEvent<HTMLFormElement>) => {
@@ -162,11 +169,13 @@ const ModuleInfo: FC = () => {
                                             {module_id != 'new' && <Button variant='danger' onClick={cancel}>Отменить</Button>}
                                         </ButtonGroup>
                                     ) : (
-                                        <Button
-                                            className='w-100 '
-                                            onClick={() => setEdit(true)}>
-                                            Изменить
-                                        </Button>
+                                        <ButtonGroup className='w-100'>
+                                            <Button
+                                                onClick={() => setEdit(true)}>
+                                                Изменить
+                                            </Button>
+                                            <Button variant='danger' onClick={deleteModule}>Удалить</Button>
+                                        </ButtonGroup>
                                     )}
                                 </Form>
                             </Col>
