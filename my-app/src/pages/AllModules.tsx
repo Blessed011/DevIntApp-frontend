@@ -62,7 +62,7 @@ const AllModules = () => {
                         type="text"
                         placeholder="Поиск"
                         className="form-control-sm flex-grow-1 shadow"
-                        data-bs-theme="dark"
+                        data-bs-theme="light"
                         value={searchText}
                         onChange={(e) => dispatch(setName(e.target.value))}             ///setName oder setType ????
                     />
@@ -85,7 +85,7 @@ const AllModules = () => {
                                         variant='outline-primary'
                                         className='mt-0 rounded-bottom'
                                         onClick={addToMission(module.uuid)}>
-                                        Добавить в корзину
+                                        Добавить
                                     </Button>
                                 }
                             </ModuleCard>
@@ -96,7 +96,7 @@ const AllModules = () => {
             {!!role && <Link to={`/missions/${draft}`}>
                 <Button
                     style={{ position: 'fixed', bottom: '16px', right: '16px', zIndex: '1000' }}
-                    className="btn btn-primary rounded-pill"
+                    className="btn btn-primary"
                     disabled={!draft}>
                     Корзина
                 </Button>
