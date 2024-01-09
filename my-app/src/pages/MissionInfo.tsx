@@ -141,13 +141,22 @@ const MissionInfo = () => {
                                 </InputGroup>}
                                 <InputGroup className='mb-1'>
                                     <InputGroup.Text className='t-input-group-text'>Название</InputGroup.Text>
+                                    {mission.status === 'черновик' &&
+                                    <Form.Control
+                                        readOnly={edit}
+                                        placeholder='Введите название'
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />}
+                                    {mission.status != 'черновик' &&
                                     <Form.Control
                                         readOnly={!edit}
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
-                                    />
-                                    {!edit && mission.status === 'черновик' && <Button onClick={() => setEdit(true)}>Изменить</Button>}
-                                    {edit && <Button variant='success' onClick={update}>Сохранить</Button>}
+                                    />}
+                                    {!edit && mission.status === 'черновик' && 
+                                    <Button onClick={update}>Принять</Button>}
+                                    {/* {edit && <Button variant='success' onClick={update}>Сохранить</Button>}
                                     {edit && <Button
                                         variant='danger'
                                         onClick={() => {
@@ -155,7 +164,7 @@ const MissionInfo = () => {
                                             setEdit(false)
                                         }}>
                                         Отменить
-                                    </Button>}
+                                    </Button>} */}
                                 </InputGroup>
                                 {mission.status != 'черновик' &&
                                     <InputGroup className='mb-1'>
