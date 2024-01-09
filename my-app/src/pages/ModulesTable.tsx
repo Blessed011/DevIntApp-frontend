@@ -56,7 +56,7 @@ const ContainerTable = () => {
                         type="text"
                         placeholder="Поиск"
                         className="form-control-sm flex-grow-1 shadow"
-                        data-bs-theme="dark"
+                        data-bs-theme="light"
                         value={searchText}
                         onChange={(e) => dispatch(setName(e.target.value))}
                     />
