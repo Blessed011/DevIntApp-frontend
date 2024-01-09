@@ -27,8 +27,8 @@ const Search: FC<ISearchProps> = ({ setModules }) => {
                 <Form.Control
                     type="text"
                     placeholder="Поиск"
-                    className="form-control-sm flex-grow-1 shadow shadow-sm"
-                    data-bs-theme="dark"
+                    className="form-control-sm flex-grow-1 shadow"
+                    data-bs-theme="light"
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
                 />
@@ -36,7 +36,7 @@ const Search: FC<ISearchProps> = ({ setModules }) => {
                     variant="primary"
                     size="sm"
                     type="submit"
-                    className="shadow">
+                    className="shadow-lg">
                     Поиск
                 </Button>
             </Form>
