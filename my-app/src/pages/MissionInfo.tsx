@@ -163,12 +163,12 @@ const MissionInfo = () => {
                                         <Form.Control readOnly value={mission.funding_status ? mission.funding_status : ''} />
                                     </InputGroup>
                                 }
-                                {mission.status == 'сформирована' && role == MODERATOR &&
+                                {/* {mission.status == 'сформирована' && role == MODERATOR &&       
                                     <ButtonGroup className='flex-grow-1 w-100'>
                                         <Button variant='success' onClick={moderator_confirm(true)}>Подтвердить</Button>
                                         <Button variant='danger' onClick={moderator_confirm(false)}>Отменить</Button>
                                     </ButtonGroup>
-                                }
+                                } */}
                                 {mission.status == 'черновик' &&
                                     <ButtonGroup className='flex-grow-1 w-100'>
                                         <Button variant='success' onClick={confirm}>Сформировать</Button>

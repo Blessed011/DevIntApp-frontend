@@ -28,7 +28,7 @@ const ModuleInfo: FC = () => {
         const getData = async () => {
             setLoaded(false);
             let data: IModule | undefined;
-            let newname: string;           //mb delete
+            let name: string;
             try {
                 if (module_id == 'new') {
                     data = {
@@ -40,14 +40,14 @@ const ModuleInfo: FC = () => {
                         diameter: "",
                         image_url: "",
                     }
-                    newname = 'Новый модуль'    //mb delete
+                    name = 'Новый модуль'
                     setEdit(true)
                 } else {
                     data = await getModule(module_id);
-                    newname = data ? data.name : ''
+                    name = data ? data.name : ''
                 }
                 setModule(data);
-                dispatch(addToHistory({ path: location, name: newname }));
+                dispatch(addToHistory({ path: location, name: name }));
             } finally {
                 setLoaded(true);
             }
@@ -169,13 +169,13 @@ const ModuleInfo: FC = () => {
                                             {module_id != 'new' && <Button variant='danger' onClick={cancel}>Отменить</Button>}
                                         </ButtonGroup>
                                     ) : (
-                                        <ButtonGroup className='w-100'>
+                                        <>
                                             <Button
                                                 onClick={() => setEdit(true)}>
                                                 Изменить
                                             </Button>
                                             <Button variant='danger' onClick={deleteModule}>Удалить</Button>
-                                        </ButtonGroup>
+                                        </>
                                     )}
                                 </Form>
                             </Col>

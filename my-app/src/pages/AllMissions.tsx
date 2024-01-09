@@ -18,7 +18,7 @@ import DateTimePicker from '../components/DatePicker';
 const AllMissions = () => {
     const [missions, setMissions] = useState<IMission[]>([])
     const userFilter = useSelector((state: RootState) => state.search.user);
-    const statusFilter = useSelector((state: RootState) => state.search.status);
+    const missionStatusFilter = useSelector((state: RootState) => state.search.status);
     const startDate = useSelector((state: RootState) => state.search.formationDateStart);
     const endDate = useSelector((state: RootState) => state.search.formationDateEnd);
     const role = useSelector((state: RootState) => state.user.role);
@@ -29,7 +29,7 @@ const AllMissions = () => {
     console.log(startDate)
 
     const getData = () => {
-        getMissions(userFilter, statusFilter, startDate, endDate)
+        getMissions(userFilter, missionStatusFilter, startDate, endDate)
             .then((data) => {
                 setLoaded(true);
                 setMissions(data)
@@ -48,7 +48,7 @@ const AllMissions = () => {
             getData();
         }, 2000);
         return () => clearInterval(intervalId);
-    }, [dispatch, userFilter, statusFilter, startDate, endDate]);
+    }, [dispatch, userFilter, missionStatusFilter, startDate, endDate]);
 
     const moderator_confirm = (id: string, confirm: boolean) => () => {
         const accessToken = localStorage.getItem('access_token');
@@ -70,7 +70,7 @@ const AllMissions = () => {
                     <InputGroup size='sm' className='shadow-sm'>
                         <InputGroup.Text >Статус</InputGroup.Text>
                         <Form.Select
-                            defaultValue={statusFilter}
+                            defaultValue={missionStatusFilter}
                             onChange={(status) => dispatch(setStatus(status.target.value))}
                         >
                             <option value="">Любой</option>
@@ -87,13 +87,13 @@ const AllMissions = () => {
                         selected={endDate ? new Date(endDate) : null}
                         onChange={(date: Date) => dispatch(setDateEnd(date ? date.toISOString() : null))}
                     />
-                    <Button
+                    {/* <Button
                         variant="primary"
                         size="sm"
                         type="submit"
                         className="shadow-lg">
                         Поиск
-                    </Button>
+                    </Button> */}
                 </Form>
             </Navbar>
             < LoadAnimation loaded={loaded}>
