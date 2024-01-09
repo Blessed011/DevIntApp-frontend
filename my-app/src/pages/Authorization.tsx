@@ -57,7 +57,7 @@ const Authorization: FC = () => {
 
     return (
         <Container fluid="sm" className='d-flex flex-column flex-grow-1 align-items-center justify-content-center'>
-            <Form onSubmit={handleRegistration} className='d-flex flex-column align-items-center'>
+            <Form onSubmit={handleRegistration} className='d-flex flex-column align-items-center another-form'>
                 <h2>Вход</h2>
 
                 <Form.Group controlId="login" className='d-flex flex-column align-items-center mt-2'>
