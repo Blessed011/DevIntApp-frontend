@@ -40,9 +40,8 @@ function NavigationBar() {
                             {userLogin ? (
                                 <>
                                     <Navbar.Text className="px-2">
-                                        {userLogin}
+                                       Пользователь: {userLogin}
                                     </Navbar.Text>
-                                    <Navbar.Text className="d-none d-sm-block">|</Navbar.Text>
                                     <Button
                                         variant="link"
                                         className="nav-link"
@@ -53,7 +52,6 @@ function NavigationBar() {
                             ) : (
                                 <>
                                     <Link to='/authorization' className="nav-link">Войти</Link>
-                                    <Navbar.Text className="d-none d-sm-block">|</Navbar.Text>
                                     <Link to='/registration' className="nav-link">Регистрация</Link>
                                 </>
                             )}
