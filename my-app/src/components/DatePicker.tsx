@@ -15,7 +15,7 @@ interface CustomInputProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const DateTimePicker: FC<DatePickerProps> = ({ selected, onChange }) => {
     const CustomInput = forwardRef<HTMLButtonElement, CustomInputProps>((props, ref) => (
         <Button
-            variant="outline-dark"
+            variant="outline-dark bg-light"
             ref={ref}
             size="sm"
             className="text-nowrap"
