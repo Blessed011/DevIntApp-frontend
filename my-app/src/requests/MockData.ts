@@ -19,7 +19,7 @@ export let modules = new Map<string, IModuleProps>([
             "name": "Электродвигательный модуль (PPE)",
             "description": "Модуль, который обеспечивает движение космического корабля.",
             "mass": "5 тонн",
-            "image_url": "http://localhost:9000/images/5d386611-ce4a-46a9-ba66-68da491b613b.jpeg",
+            "image_url": "http://localhost:9000/images/5d386611-ce4a-46a9-ba66-68da491b613b.jpg",
             "length": "11 метров",
             "diameter": "4,5 метра",
         }
