@@ -1,6 +1,7 @@
 import { Button } from 'react-bootstrap';
 import { forwardRef, ButtonHTMLAttributes, FC } from 'react';
 import DatePicker from 'react-datepicker';
+import ru from 'date-fns/locale/ru'
 
 interface DatePickerProps {
     selected: Date | null | undefined;
@@ -38,6 +39,7 @@ const DateTimePicker: FC<DatePickerProps> = ({ selected, onChange }) => {
             dateFormat="MM.d.yyyy"
             customInput={<CustomInput />}
             className="text-nowrap shadow-sm"
+            locale={ru}
         />
     );
 };

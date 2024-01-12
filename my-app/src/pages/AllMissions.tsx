@@ -8,7 +8,7 @@ import { IMission } from "../models";
 import { axiosAPI } from '../api'
 
 import { AppDispatch, RootState } from "../store";
-import { setUser, setStatus, setDateStart, setDateEnd } from "../store/searchSlice";
+import { setUser, setMissionStatus, setDateStart, setDateEnd } from "../store/searchSlice";
 import { clearHistory, addToHistory } from "../store/historySlice";
 
 import LoadAnimation from '../components/LoadAnimation';
@@ -71,7 +71,7 @@ const AllMissions = () => {
                         <InputGroup.Text >Статус</InputGroup.Text>
                         <Form.Select
                             defaultValue={missionStatusFilter}
-                            onChange={(status) => dispatch(setStatus(status.target.value))}
+                            onChange={(status) => dispatch(setMissionStatus(status.target.value))}
                         >
                             <option value="">Любой</option>
                             <option value="сформирована">Сформирована</option>
